@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  repository-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate required structure
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f README.md
+          test -f docs/ARCHITECTURE.md
+          test -f frontend/README.md
+          test -f backend/README.md
+          test -f agents/README.md
+          test -f infra/docker-compose.yml
